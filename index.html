@@ -132,9 +132,6 @@ function exportData() {
   a.click();
 
   setTimeout(() => {
-    if (document.body.contains(a)) {
-      window.open(url);
-    }
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }, 200);
