@@ -149,7 +149,7 @@ function importData(event) {
   const reader = new FileReader();
   reader.onload = function(e) {
     document.getElementById("input").value = e.target.result;
-    localStorage.setItem(STORAGE_KEY, e.target.result); // also save after import
+    localStorage.setItem(STORAGE_KEY, e.target.result);
   };
   reader.readAsText(file);
 }
@@ -218,7 +218,7 @@ function startCountdown(sec) {
   }, 1000);
 }
 
-/* -------- CARD LOOP -------- */
+/* -------- CARD LOOP (FIXED DISPLAY) -------- */
 function nextCard() {
   if (!running) return;
 
@@ -227,25 +227,24 @@ function nextCard() {
   const keyDelaySec = parseFloat(document.getElementById("keyDelay").value);
   const valueDelaySec = parseFloat(document.getElementById("valueDelay").value);
 
-  const keyDelay = keyDelaySec * 1000;
-  const valueDelay = valueDelaySec * 1000;
-
   const item = data[index];
 
-  textEl.textContent = item.key;
+  // Show key only
+  textEl.innerHTML = item.key;
   startCountdown(keyDelaySec);
 
   timer = setTimeout(() => {
-    textEl.textContent = item.value;
+    // Show key + value below
+    textEl.innerHTML = item.key + "<br>" + item.value;
     document.getElementById("countdown").textContent = "";
 
     timer = setTimeout(() => {
       index++;
       if (index >= data.length) index = 0;
       nextCard();
-    }, valueDelay);
+    }, valueDelaySec * 1000);
 
-  }, keyDelay);
+  }, keyDelaySec * 1000);
 }
 </script>
 
